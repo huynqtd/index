@@ -27,8 +27,8 @@
       cursor: pointer;
     }
     .avatar {
-      width: 60px;
-      height: 60px;
+      width: 80px;
+      height: 80px;
       border-radius: 50%;
       object-fit: cover;
       border: 2px solid #007BFF;
@@ -76,11 +76,9 @@
 </head>
 <body>
   <h1>Sơ đồ cơ quan Thuế Chợ Mới - Na Rì</h1>
-
   <div class="row" id="leaderRow"></div>
   <div class="row" id="deputyRow"></div>
   <div class="row" id="teamRow"></div>
-
   <div class="overlay" id="overlay" onclick="closeModal()"></div>
   <div class="modal" id="modal">
     <h3 id="modalTitle"></h3>
@@ -93,11 +91,11 @@
   <script>
     const data = {
       leader: {
-  name: "Hứa Hữu Hoài",
-  position: "Đội trưởng",
-  avatar: "https://raw.githubusercontent.com/huynqtd/index/main/AHoai.jpg",
-  dob: "08/12/1981",
-  phone: "0915008837"
+        name: "Hứa Hữu Hoài",
+        position: "Đội trưởng",
+        avatar: "https://raw.githubusercontent.com/huynqtd/index/main/AHoai.jpg",
+        dob: "08/12/1981",
+        phone: "0915008837"
       },
       deputies: [
         {
@@ -121,21 +119,30 @@
           members: [
             { name: "Nông Thị Diệu Lan", position: "Tổ trưởng", dob: "01/01/1980", phone: "0911111111" },
             { name: "Nguyễn Thị Tuyết", position: "Phó tổ trưởng", dob: "02/02/1981", phone: "0922222222" },
-            { name: "Đinh Phương Thắm", position: "Phó tổ trưởng", dob: "03/03/1982", phone: "0933333333" }
-            { name: "Nguyễn Thị Thời", position: "Phó tổ trưởng", dob: "03/03/1982", phone: "0933333333" }
+            { name: "Đinh Phương Thắm", position: "Phó tổ trưởng", dob: "03/03/1982", phone: "0933333333" },
+            { name: "Nguyễn Thị Thời", position: "Phó tổ trưởng", dob: "04/04/1982", phone: "0944444444" }
           ]
         },
         {
           name: "Tổ Quản lý, hỗ trợ Doanh nghiệp",
-          members: ["TV1", "TV2"]
+          members: [
+            { name: "Phạm Văn A", position: "Nhân viên", dob: "05/05/1983", phone: "0955555555" },
+            { name: "Lê Thị B", position: "Nhân viên", dob: "06/06/1984", phone: "0966666666" }
+          ]
         },
         {
           name: "Tổ hỗ trợ cá nhân, HKD - Chợ Mới",
-          members: ["TV1", "TV2"]
+          members: [
+            { name: "Ngô Văn C", position: "Nhân viên", dob: "07/07/1985", phone: "0977777777" },
+            { name: "Trần Thị D", position: "Nhân viên", dob: "08/08/1986", phone: "0988888888" }
+          ]
         },
         {
           name: "Tổ hỗ trợ cá nhân, HKD - Na Rì",
-          members: ["TV1", "TV2"]
+          members: [
+            { name: "Đào Văn E", position: "Nhân viên", dob: "09/09/1987", phone: "0999999999" },
+            { name: "Vũ Thị F", position: "Nhân viên", dob: "10/10/1988", phone: "0900000000" }
+          ]
         }
       ]
     };
@@ -144,7 +151,7 @@
       const box = document.createElement("div");
       box.className = "box";
       box.innerHTML = `
-        <img src="${person.avatar}" class="avatar" />
+        <img src="${person.avatar || 'https://via.placeholder.com/60'}" class="avatar" />
         <div><strong>${person.name}</strong></div>
         <div class="info">${person.position}</div>
       `;
@@ -154,7 +161,7 @@
 
     function showModal(person) {
       document.getElementById("modalTitle").textContent = person.name;
-      document.getElementById("modalPosition").textContent = person.position;
+      document.getElementById("modalPosition").textContent = person.position || "";
       document.getElementById("modalDob").textContent = "Ngày sinh: " + (person.dob || "Không rõ");
       document.getElementById("modalPhone").textContent = "SĐT: " + (person.phone || "Không rõ");
       document.getElementById("modal").style.display = "block";
@@ -166,27 +173,30 @@
       document.getElementById("overlay").style.display = "none";
     }
 
-    // Render
-    document.getElementById("leaderRow").appendChild(createBox(data.leader));
+    window.onload = function () {
+      document.getElementById("leaderRow").appendChild(createBox(data.leader));
 
-    data.deputies.forEach(dep => {
-      document.getElementById("deputyRow").appendChild(createBox(dep));
-    });
-
-    data.teams.forEach(team => {
-      const box = document.createElement("div");
-      box.className = "box";
-      box.innerHTML = `<strong>${team.name}</strong>`;
-      const memberList = document.createElement("div");
-      memberList.className = "members";
-      team.members.forEach(m => {
-        const memberDiv = document.createElement("div");
-        memberDiv.textContent = m;
-        memberList.appendChild(memberDiv);
+      data.deputies.forEach(dep => {
+        document.getElementById("deputyRow").appendChild(createBox(dep));
       });
-      box.appendChild(memberList);
-      document.getElementById("teamRow").appendChild(box);
-    });
+
+      data.teams.forEach(team => {
+        const box = document.createElement("div");
+        box.className = "box";
+        box.innerHTML = `<strong>${team.name}</strong>`;
+        const memberList = document.createElement("div");
+        memberList.className = "members";
+        team.members.forEach(member => {
+          const memberDiv = document.createElement("div");
+          memberDiv.textContent = `${member.position}: ${member.name}`;
+          memberDiv.style.cursor = "pointer";
+          memberDiv.onclick = () => showModal(member);
+          memberList.appendChild(memberDiv);
+        });
+        box.appendChild(memberList);
+        document.getElementById("teamRow").appendChild(box);
+      });
+    }
   </script>
 </body>
 </html>
