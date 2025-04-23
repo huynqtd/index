@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Sơ đồ cơ quan Thuế Chợ Mới - Na Rì</title>
+  <title>Sơ đồ tổ chức cơ quan</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -22,7 +22,7 @@
       border: 2px solid #007BFF;
       border-radius: 10px;
       padding: 10px;
-      width: 160px;
+      width: 180px;
       box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
       cursor: pointer;
     }
@@ -72,13 +72,24 @@
       border-radius: 5px;
       cursor: pointer;
     }
+    #searchInput {
+      padding: 6px;
+      font-size: 16px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      width: 300px;
+    }
   </style>
 </head>
 <body>
-  <h1>Sơ đồ cơ quan Thuế Chợ Mới - Na Rì</h1>
+  <h1>Sơ đồ tổ chức cơ quan</h1>
+  <input type="text" id="searchInput" placeholder="Tìm kiếm nhân sự..." onkeyup="filterPersonnel()">
+
   <div class="row" id="leaderRow"></div>
   <div class="row" id="deputyRow"></div>
   <div class="row" id="teamRow"></div>
+
   <div class="overlay" id="overlay" onclick="closeModal()"></div>
   <div class="modal" id="modal">
     <h3 id="modalTitle"></h3>
@@ -88,6 +99,7 @@
     <button class="close-btn" onclick="closeModal()">Đóng</button>
   </div>
 
+  <!-- Dưới đây là script -->
   <script>
     const data = {
       leader: {
@@ -101,14 +113,14 @@
         {
           name: "Trịnh Văn Phụng",
           position: "Phó đội trưởng - CM",
-          avatar: "https://via.placeholder.com/60",
+          avatar: "https://raw.githubusercontent.com/huynqtd/index/main/APhung.jpg",
           dob: "07/09/1973",
           phone: "0982266559"
         },
         {
           name: "Nông Quang Huy",
           position: "Phó đội trưởng - NR",
-          avatar: "https://via.placeholder.com/60",
+          avatar: "https://raw.githubusercontent.com/huynqtd/index/main/AHuy.jpg",
           dob: "06/12/1973",
           phone: "0915201572"
         }
@@ -117,35 +129,35 @@
         {
           name: "Tổ Nghiệp vụ - dự toán pháp chế",
           members: [
-            { name: "Nông Thị Diệu Lan", position: "Tổ trưởng", dob: "01/01/1980", phone: "0911111111" },
-            { name: "Nguyễn Thị Tuyết", position: "Phó tổ trưởng", dob: "02/02/1981", phone: "0922222222" },
-            { name: "Đinh Phương Thắm", position: "Phó tổ trưởng", dob: "03/03/1982", phone: "0933333333" },
-            { name: "Nguyễn Thị Thời", position: "Phó tổ trưởng", dob: "04/04/1982", phone: "0944444444" }
+            { name: "Nông Thị Diệu Lan", position: "Tổ trưởng", dob: "01/01/1980", phone: "0911111111", avatar: "https://raw.githubusercontent.com/huynqtd/index/main/DLan.jpg" },
+            { name: "Nguyễn Thị Tuyết", position: "Phó tổ trưởng", dob: "02/02/1981", phone: "0922222222", avatar: "https://raw.githubusercontent.com/huynqtd/index/main/NTTuyet.jpg" }
           ]
         },
         {
           name: "Tổ Quản lý, hỗ trợ Doanh nghiệp",
           members: [
-            { name: "Phạm Văn A", position: "Nhân viên", dob: "05/05/1983", phone: "0955555555" },
-            { name: "Lê Thị B", position: "Nhân viên", dob: "06/06/1984", phone: "0966666666" }
+            { name: "Phạm Văn A", position: "Nhân viên", dob: "05/05/1983", phone: "0955555555", avatar: "https://raw.githubusercontent.com/huynqtd/index/main/PVanA.jpg" },
+            { name: "Lê Thị B", position: "Nhân viên", dob: "06/06/1984", phone: "0966666666", avatar: "https://raw.githubusercontent.com/huynqtd/index/main/LThiB.jpg" }
           ]
         },
         {
           name: "Tổ hỗ trợ cá nhân, HKD - Chợ Mới",
           members: [
-            { name: "Ngô Văn C", position: "Nhân viên", dob: "07/07/1985", phone: "0977777777" },
-            { name: "Trần Thị D", position: "Nhân viên", dob: "08/08/1986", phone: "0988888888" }
+            { name: "Ngô Văn C", position: "Nhân viên", dob: "07/07/1985", phone: "0977777777", avatar: "https://raw.githubusercontent.com/huynqtd/index/main/NVC.jpg" },
+            { name: "Trần Thị D", position: "Nhân viên", dob: "08/08/1986", phone: "0988888888", avatar: "https://raw.githubusercontent.com/huynqtd/index/main/TTD.jpg" }
           ]
         },
         {
           name: "Tổ hỗ trợ cá nhân, HKD - Na Rì",
           members: [
-            { name: "Đào Văn E", position: "Nhân viên", dob: "09/09/1987", phone: "0999999999" },
-            { name: "Vũ Thị F", position: "Nhân viên", dob: "10/10/1988", phone: "0900000000" }
+            { name: "Đào Văn E", position: "Nhân viên", dob: "09/09/1987", phone: "0999999999", avatar: "https://raw.githubusercontent.com/huynqtd/index/main/DVE.jpg" },
+            { name: "Vũ Thị F", position: "Nhân viên", dob: "10/10/1988", phone: "0900000000", avatar: "https://raw.githubusercontent.com/huynqtd/index/main/VTF.jpg" }
           ]
         }
       ]
     };
+
+    const allPeople = [];
 
     function createBox(person) {
       const box = document.createElement("div");
@@ -156,6 +168,8 @@
         <div class="info">${person.position}</div>
       `;
       box.onclick = () => showModal(person);
+      box.dataset.name = person.name.toLowerCase();
+      allPeople.push(box);
       return box;
     }
 
@@ -173,30 +187,62 @@
       document.getElementById("overlay").style.display = "none";
     }
 
+    function filterPersonnel() {
+      const keyword = document.getElementById("searchInput").value.toLowerCase();
+      allPeople.forEach(box => {
+        box.style.display = box.dataset.name.includes(keyword) ? "block" : "none";
+      });
+    }
+
     window.onload = function () {
       document.getElementById("leaderRow").appendChild(createBox(data.leader));
-
       data.deputies.forEach(dep => {
         document.getElementById("deputyRow").appendChild(createBox(dep));
       });
 
       data.teams.forEach(team => {
-        const box = document.createElement("div");
-        box.className = "box";
-        box.innerHTML = `<strong>${team.name}</strong>`;
+        const container = document.createElement("div");
+        container.className = "box";
+
+        const header = document.createElement("div");
+        header.style.display = "flex";
+        header.style.justifyContent = "space-between";
+        header.style.alignItems = "center";
+
+        const title = document.createElement("strong");
+        title.textContent = team.name;
+
+        const toggleIcon = document.createElement("span");
+        toggleIcon.textContent = "+";
+        toggleIcon.style.cursor = "pointer";
+        toggleIcon.style.fontWeight = "bold";
+        toggleIcon.style.marginLeft = "10px";
+
+        header.appendChild(title);
+        header.appendChild(toggleIcon);
+        container.appendChild(header);
+
         const memberList = document.createElement("div");
         memberList.className = "members";
+        memberList.style.display = "none";
+
         team.members.forEach(member => {
-          const memberDiv = document.createElement("div");
-          memberDiv.textContent = `${member.position}: ${member.name}`;
-          memberDiv.style.cursor = "pointer";
-          memberDiv.onclick = () => showModal(member);
+          const memberDiv = createBox(member);
           memberList.appendChild(memberDiv);
         });
-        box.appendChild(memberList);
-        document.getElementById("teamRow").appendChild(box);
+
+        toggleIcon.onclick = (e) => {
+          e.stopPropagation();
+          const isVisible = memberList.style.display === "flex";
+          memberList.style.display = isVisible ? "none" : "flex";
+          toggleIcon.textContent = isVisible ? "+" : "−";
+          memberList.style.flexDirection = "column";
+        };
+
+        container.appendChild(memberList);
+        document.getElementById("teamRow").appendChild(container);
       });
-    }
+    };
   </script>
 </body>
 </html>
