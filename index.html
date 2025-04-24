@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -99,7 +100,6 @@
     <button class="close-btn" onclick="closeModal()">Đóng</button>
   </div>
 
-  <!-- Dưới đây là script -->
   <script>
     const data = {
       leader: {
@@ -163,13 +163,12 @@
       const box = document.createElement("div");
       box.className = "box";
       box.innerHTML = `
-        <img src="${person.avatar || 'https://via.placeholder.com/60'}" class="avatar" />
+        <img src="${person.avatar}" class="avatar" />
         <div><strong>${person.name}</strong></div>
         <div class="info">${person.position}</div>
       `;
       box.onclick = () => showModal(person);
-      box.dataset.name = person.name.toLowerCase();
-      allPeople.push(box);
+      box.dataset.name = (person.name + person.position + person.phone).toLowerCase();
       return box;
     }
 
@@ -189,15 +188,42 @@
 
     function filterPersonnel() {
       const keyword = document.getElementById("searchInput").value.toLowerCase();
-      allPeople.forEach(box => {
+      document.querySelectorAll("#leaderRow .box, #deputyRow .box").forEach(box => {
         box.style.display = box.dataset.name.includes(keyword) ? "block" : "none";
+      });
+
+      document.querySelectorAll("#teamRow .box").forEach(teamBox => {
+        const members = teamBox.querySelectorAll(".members .box");
+        let anyVisible = false;
+        members.forEach(member => {
+          const match = member.dataset.name.includes(keyword);
+          member.style.display = match ? "block" : "none";
+          if (match) anyVisible = true;
+        });
+
+        const memberList = teamBox.querySelector(".members");
+        const toggleIcon = teamBox.querySelector("span");
+        if (anyVisible) {
+          teamBox.style.display = "block";
+          memberList.style.display = "flex";
+          toggleIcon.textContent = "−";
+        } else {
+          teamBox.style.display = keyword ? "none" : "block";
+          memberList.style.display = "none";
+          toggleIcon.textContent = "+";
+        }
       });
     }
 
     window.onload = function () {
-      document.getElementById("leaderRow").appendChild(createBox(data.leader));
+      const leaderBox = createBox(data.leader);
+      document.getElementById("leaderRow").appendChild(leaderBox);
+      allPeople.push(leaderBox);
+
       data.deputies.forEach(dep => {
-        document.getElementById("deputyRow").appendChild(createBox(dep));
+        const depBox = createBox(dep);
+        document.getElementById("deputyRow").appendChild(depBox);
+        allPeople.push(depBox);
       });
 
       data.teams.forEach(team => {
@@ -229,14 +255,14 @@
         team.members.forEach(member => {
           const memberDiv = createBox(member);
           memberList.appendChild(memberDiv);
+          allPeople.push(memberDiv);
         });
 
-        toggleIcon.onclick = (e) => {
-          e.stopPropagation();
+        container.onclick = () => {
           const isVisible = memberList.style.display === "flex";
           memberList.style.display = isVisible ? "none" : "flex";
-          toggleIcon.textContent = isVisible ? "+" : "−";
           memberList.style.flexDirection = "column";
+          toggleIcon.textContent = isVisible ? "+" : "−";
         };
 
         container.appendChild(memberList);
