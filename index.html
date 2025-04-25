@@ -82,6 +82,11 @@
       border: 1px solid #ccc;
       width: 300px;
     }
+    .box:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  transition: all 0.2s ease-in-out;
+}/*Tăng tính tương tác bằng hiệu ứng hover*/
   </style>
 </head>
 <body>
@@ -242,7 +247,9 @@
       document.getElementById("modalTitle").textContent = person.name;
       document.getElementById("modalPosition").textContent = person.position || "";
       document.getElementById("modalDob").textContent = "Ngày sinh: " + (person.dob || "Không rõ");
-      document.getElementById("modalPhone").textContent = "SĐT: " + (person.phone || "Không rõ");
+      document.getElementById("modalPhone").innerHTML = person.phone
+  ? `SĐT: <a href="tel:${person.phone}" style="color: #007BFF; text-decoration: none;">${person.phone}</a>`
+  : "SĐT: Không rõ";
       document.getElementById("modal").style.display = "block";
       document.getElementById("overlay").style.display = "block";
     }
