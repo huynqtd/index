@@ -7,7 +7,8 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f0f2f5;
+      background: url('https://raw.githubusercontent.com/huynqtd/index/main/background.jpg') no-repeat center center fixed;
+  background-size: cover;
       text-align: center;
       padding: 20px;
     }
@@ -20,14 +21,19 @@
       align-items: flex-start; /* Giúp các cột không bị kéo dài */
     }
     .box {
-      background: #fff;
+      background: rgba(255, 248, 240, 0.9); /* nền trắng hơi trong suốt */
       border: 2px solid #007BFF;
       border-radius: 10px;
       padding: 10px;
       width: 180px;
       box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
       cursor: pointer;
-    }
+      transition: transform 0.2s;
+}
+.box:hover {
+  transform: translateY(-4px);
+  box-shadow: 4px 6px 18px rgba(0, 0, 0, 0.3);
+}
     .avatar {
       width: 80px;
       height: 80px;
@@ -35,6 +41,7 @@
       object-fit: cover;
       border: 2px solid #007BFF;
       margin-bottom: 8px;
+      background-color: #2832bb; /* giúp tránh ảnh trắng khi chưa load */
     }
     .info {
       font-size: 14px;
@@ -113,7 +120,8 @@
         position: "Đội trưởng",
         avatar: "https://raw.githubusercontent.com/huynqtd/index/main/AHoai.jpg",
         dob: "08/12/1981",
-        phone: "0915008837"
+        phone: "0915008837",
+        description: "Chịu trách nhiệm chung về hoạt động của toàn đội, điều phối các tổ chuyên môn và đảm bảo hoàn thành nhiệm vụ theo kế hoạch của Cục Thuế giao."
       },
       deputies: [
         {
@@ -244,15 +252,35 @@
     }
 
     function showModal(person) {
-      document.getElementById("modalTitle").textContent = person.name;
-      document.getElementById("modalPosition").textContent = person.position || "";
-      document.getElementById("modalDob").textContent = "Ngày sinh: " + (person.dob || "Không rõ");
-      document.getElementById("modalPhone").innerHTML = person.phone
-  ? `SĐT: <a href="tel:${person.phone}" style="color: #007BFF; text-decoration: none;">${person.phone}</a>`
+  const modal = document.getElementById("modal");
+
+  // Reset các mô tả cũ nếu có
+  modal.querySelectorAll("p").forEach((p, index) => {
+    if (index > 2) p.remove(); // chỉ giữ lại 3 dòng đầu
+  });
+
+  // Cập nhật nội dung chính
+  document.getElementById("modalTitle").textContent = person.name;
+  document.getElementById("modalPosition").textContent = person.position || "";
+  document.getElementById("modalDob").textContent = "Ngày sinh: " + (person.dob || "Không rõ");
+  document.getElementById("modalPhone").innerHTML = person.phone
+  ? `SĐT: <a href="tel:${person.phone}" style="color:#007BFF;text-decoration:none;">📞 ${person.phone}</a>`
   : "SĐT: Không rõ";
-      document.getElementById("modal").style.display = "block";
-      document.getElementById("overlay").style.display = "block";
-    }
+
+  // Nếu có mô tả, hiển thị thêm
+  if (person.description) {
+    const descPara = document.createElement("p");
+    descPara.textContent = "Mô tả: " + person.description;
+    descPara.style.marginTop = "10px";
+    descPara.style.fontSize = "14px";
+    modal.appendChild(descPara);
+  }
+
+  // Hiển thị modal
+  modal.style.display = "block";
+  document.getElementById("overlay").style.display = "block";
+}
+
 
     function closeModal() {
       document.getElementById("modal").style.display = "none";
