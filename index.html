@@ -438,6 +438,12 @@ function filterPersonnel() {
         document.getElementById("teamRow").appendChild(container);
       });
     };
+    document.addEventListener("keydown", function (e) {
+  if (e.key === "Escape") {
+    closeModal();
+  }
+});
+
   </script>
 </body>
 </html>
