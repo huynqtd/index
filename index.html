@@ -195,6 +195,7 @@
 
 <body>
   <h1>Đội Thuế liên huyện Chợ Mới - Na Rì</h1>
+  <div id="birthdayAlert" style="margin-bottom: 20px; font-size: 16px; font-weight: bold; color: #d2691e;"></div>
   <input type="text" id="searchInput" placeholder="Tìm kiếm nhân sự..." onkeyup="filterPersonnel()">
   <button id="printBtn" onclick="window.print()">🖨 In sơ đồ</button>
 
@@ -374,6 +375,7 @@
         <div class="info">${person.position}</div>
       `;
       box.onclick = () => showModal(person);
+      box.onclick.personData = person; // <-- thêm dòng này
       box.dataset.name = (person.name + person.position + person.phone).toLowerCase();
       return box;
     }
@@ -419,6 +421,29 @@
         .normalize("NFD").replace(/\p{Diacritic}/gu, '')
         .replace(/\s+/g, '');
     }
+    function showBirthdayAlert() {
+  const birthdayDiv = document.getElementById("birthdayAlert");
+  const now = new Date();
+  const currentMonth = now.getMonth() + 1; // Tháng JS tính từ 0 -> 11
+
+  const birthdayPeople = allPeople.filter(personBox => {
+    const person = personBox.onclick ? personBox.onclick.personData : null;
+    if (!person || !person.dob) return false;
+    const month = parseInt(person.dob.split('/')[1], 10);
+    return month === currentMonth;
+  });
+
+  if (birthdayPeople.length > 0) {
+    let list = birthdayPeople.map(personBox => {
+      const person = personBox.onclick.personData;
+      return `🎂 ${person.name} (${person.dob})`;
+    }).join("<br>");
+    birthdayDiv.innerHTML = `🎉 <u>Nhân sự có sinh nhật tháng ${currentMonth}:</u><br>` + list;
+  } else {
+    birthdayDiv.innerHTML = "";
+  }
+}
+
     function filterPersonnel() {
       const keywordRaw = document.getElementById("searchInput").value;
       const keyword = normalizeString(keywordRaw);
@@ -511,7 +536,10 @@
       if (e.key === "Escape") {
         closeModal();
       }
+      showBirthdayAlert();
     });
+    
+  
 
   </script>
 </body>
