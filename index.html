@@ -83,20 +83,21 @@
       border-radius: 5px;
       cursor: pointer;
     }
-    #searchInput {
+    #searchInput, #printBtn {
       padding: 6px;
       font-size: 16px;
       margin-bottom: 20px;
       border-radius: 5px;
       border: 1px solid #ccc;
-      width: 300px;
     }
-    /* Tổ khác màu */
-    .teamRow .box:nth-child(1) { background-color: #fffbe6; } /* Vàng nhạt */
-    .teamRow .box:nth-child(2) { background-color: #e6f7ff; } /* Xanh nhạt */
-    .teamRow .box:nth-child(3) { background-color: #e6ffe6; } /* Xanh lá nhạt */
-    .teamRow .box:nth-child(4) { background-color: #fce6ff; } /* Tím hồng */
-    .teamRow .box:nth-child(5) { background-color: #fff0f0; } /* Hồng phấn */
+    #searchInput { width: 300px; }
+    #printBtn { margin-left: 10px; cursor: pointer; }
+
+    .teamRow .box:nth-child(1) { background-color: #fffbe6; }
+    .teamRow .box:nth-child(2) { background-color: #e6f7ff; }
+    .teamRow .box:nth-child(3) { background-color: #e6ffe6; }
+    .teamRow .box:nth-child(4) { background-color: #fce6ff; }
+    .teamRow .box:nth-child(5) { background-color: #fff0f0; }
 
     @media (max-width: 768px) {
       .row {
@@ -110,12 +111,28 @@
         width: 90%;
       }
     }
+
+    @media print {
+      body {
+        background: white !important;
+        padding: 10px;
+      }
+      .modal, .overlay, #searchInput, #printBtn {
+        display: none !important;
+      }
+      .members {
+        display: flex !important;
+      }
+      .teamRow .box {
+        page-break-inside: avoid;
+      }
+    }
   </style>
 </head>
 <body>
   <h1>Đội Thuế liên huyện Chợ Mới - Na Rì</h1>
   <input type="text" id="searchInput" placeholder="Tìm kiếm nhân sự..." onkeyup="filterPersonnel()">
-  <button onclick="window.print()">🖨 In PDF</button>
+  <button id="printBtn" onclick="window.print()">🖨 In sơ đồ</button>
 
   <div class="row" id="leaderRow"></div>
   <div class="row" id="deputyRow"></div>
@@ -131,6 +148,15 @@
   </div>
 
   <script>
+    window.onbeforeprint = () => {
+      document.querySelectorAll('.members').forEach(m => {
+        m.style.display = 'flex';
+        m.style.flexDirection = 'column';
+      });
+      document.querySelectorAll('.teamRow .box span').forEach(span => {
+        span.textContent = "−";
+      });
+    };
     const data = {
       leader: {
         name: "Hứa Hữu Hoài",
@@ -174,7 +200,7 @@
              { name: "Đinh Phương Thắm", 
              position: "Phó tổ trưởng", 
              dob: "24/08/1989", 
-             phone: "0367595886", avatar: "https://raw.githubusercontent.com/huynqtd/index/main/tuyetnr.jpg" },
+             phone: "0367595886", avatar: "https://raw.githubusercontent.com/huynqtd/index/main/dinhphuongtham.jpg" },
              { name: "Nguyễn Thị Thời", 
              position: "Công chức", 
              dob: "16/06/1998", 
@@ -239,7 +265,7 @@
             { name: "Lục Thị Mĩ Nương", position: "Công chức", dob: "08/01/1996", phone: "0978185492", avatar: "https://raw.githubusercontent.com/huynqtd/index/main/lucthiminuong.jpg" },
             { name: "Phan Văn Mạnh", position: "Công chức", dob: "01/04/1992", phone: "0866685898", avatar: "https://raw.githubusercontent.com/huynqtd/index/main/NVC.jpg" },
             { name: "Đàm Triệu Huyên", position: "Công chức", dob: "16/10/1996", phone: "0336237593", avatar: "https://raw.githubusercontent.com/huynqtd/index/main/NVC.jpg" },
-            { name: "Đàm Thị Hương", position: "Công chức", dob: "23/08/1996", phone: "0394068422", avatar: "https://raw.githubusercontent.com/huynqtd/index/main/NVC.jpg" }
+            { name: "Đàm Thị Hương", position: "Công chức", dob: "23/08/1996", phone: "0394068422", avatar: "https://raw.githubusercontent.com/huynqtd/index/main/huonghonghot.jpg" }
           ]
         },
         {
