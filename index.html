@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
   <meta charset="UTF-8">
   <title>Danh bạ đội Thuế liên huyện Chợ Mới - Na Rì</title>
@@ -13,6 +14,7 @@
       padding: 20px;
       font-family: Arial, sans-serif;
     }
+
     .row {
       display: flex;
       justify-content: center;
@@ -21,20 +23,23 @@
       flex-wrap: wrap;
       align-items: flex-start;
     }
+
     .box {
       border: 2px solid #007BFF;
       border-radius: 10px;
       padding: 10px;
       width: 180px;
-      box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
       cursor: pointer;
       transition: transform 0.2s;
       background: rgba(255, 248, 240, 0.9);
     }
+
     .box:hover {
       transform: scale(1.03);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
+
     .avatar {
       width: 80px;
       height: 80px;
@@ -44,20 +49,22 @@
       margin-bottom: 8px;
       background-color: #2832bb;
     }
+
     .info {
       font-size: 14px;
     }
+
     .modal-avatar {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid #007BFF;
-  margin-bottom: 10px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #007BFF;
+      margin-bottom: 10px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
 
     .members {
       display: flex;
@@ -65,9 +72,12 @@
       gap: 10px;
       margin-top: 10px;
     }
-    .modal, .overlay {
+
+    .modal,
+    .overlay {
       display: none;
     }
+
     .modal {
       position: fixed;
       top: 50%;
@@ -77,48 +87,83 @@
       padding: 20px;
       border: 2px solid #007BFF;
       border-radius: 10px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
       z-index: 1000;
     }
+
     .overlay {
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       background: rgba(0, 0, 0, 0.5);
       z-index: 999;
     }
+
     .close-btn {
-      background: red;
-      color: white;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: transparent;
       border: none;
-      padding: 5px 10px;
-      border-radius: 5px;
+      font-size: 24px;
+      color: #ff3333;
       cursor: pointer;
     }
-    #searchInput, #printBtn {
+
+    .close-btn:hover {
+      color: #cc0000;
+    }
+
+    #searchInput,
+    #printBtn {
       padding: 6px;
       font-size: 16px;
       margin-bottom: 20px;
       border-radius: 5px;
       border: 1px solid #ccc;
     }
-    #searchInput { width: 300px; }
-    #printBtn { margin-left: 10px; cursor: pointer; }
 
-    .teamRow .box:nth-child(1) { background-color: #4067bb; }
-    .teamRow .box:nth-child(2) { background-color: #ecd713; }
-    .teamRow .box:nth-child(3) { background-color: #eb48ac; }
-    .teamRow .box:nth-child(4) { background-color: #eb6d25; }
-    .teamRow .box:nth-child(5) { background-color: #fff0f0; }
+    #searchInput {
+      width: 300px;
+    }
+
+    #printBtn {
+      margin-left: 10px;
+      cursor: pointer;
+    }
+
+    .teamRow .box:nth-child(1) {
+      background-color: #4067bb;
+    }
+
+    .teamRow .box:nth-child(2) {
+      background-color: #ecd713;
+    }
+
+    .teamRow .box:nth-child(3) {
+      background-color: #eb48ac;
+    }
+
+    .teamRow .box:nth-child(4) {
+      background-color: #eb6d25;
+    }
+
+    .teamRow .box:nth-child(5) {
+      background-color: #fff0f0;
+    }
 
     @media (max-width: 768px) {
       .row {
         flex-direction: column;
         align-items: center;
       }
+
       .box {
         width: 90%;
       }
+
       #searchInput {
         width: 90%;
       }
@@ -129,18 +174,25 @@
         background: white !important;
         padding: 10px;
       }
-      .modal, .overlay, #searchInput, #printBtn {
+
+      .modal,
+      .overlay,
+      #searchInput,
+      #printBtn {
         display: none !important;
       }
+
       .members {
         display: flex !important;
       }
+
       .teamRow .box {
         page-break-inside: avoid;
       }
     }
   </style>
 </head>
+
 <body>
   <h1>Đội Thuế liên huyện Chợ Mới - Na Rì</h1>
   <input type="text" id="searchInput" placeholder="Tìm kiếm nhân sự..." onkeyup="filterPersonnel()">
@@ -152,12 +204,12 @@
 
   <div class="overlay" id="overlay" onclick="closeModal()"></div>
   <div class="modal" id="modal">
+    <button class="close-btn" onclick="closeModal()">❌</button>
     <img id="modalAvatar" class="modal-avatar" src="" alt="Ảnh đại diện" />
     <h3 id="modalTitle"></h3>
     <p id="modalPosition"></p>
     <p id="modalDob"></p>
     <p id="modalPhone"></p>
-    <button class="close-btn" onclick="closeModal()">Đóng</button>
   </div>
 
   <script>
@@ -187,7 +239,7 @@
           dob: "07/09/1973",
           phone: "0982266559",
           description: "Hỗ trợ đội trưởng trong quản lý và điều hành hoạt động chuyên môn tại địa bàn Chợ Mới; phụ trách công việc của các tổ liên quan và theo dõi tiến độ thực hiện kế hoạch tại khu vực."
-         },
+        },
         {
           name: "Nông Quang Huy",
           position: "Phó đội trưởng - NR",
@@ -195,53 +247,74 @@
           dob: "06/12/1973",
           phone: "0915201572",
           description: "Phối hợp với đội trưởng chỉ đạo hoạt động chuyên môn tại khu vực Na Rì, phụ trách kiểm tra nghiệp vụ và hỗ trợ các tổ trong việc triển khai chính sách thuế đúng quy định."
-         }
+        }
       ],
       teams: [
         {
           name: "Tổ Nghiệp vụ - dự toán pháp chế",
           members: [
-            { name: "Nông Thị Diệu Lan",
-             position: "Tổ trưởng",
-             dob: "11/09/1989", 
-             phone: "0971110989", 
-             avatar: "https://raw.githubusercontent.com/huynqtd/index/main/dieulan.jpg" },
-            { name: "Nguyễn Thị Tuyết", 
-             position: "Phó tổ trưởng", 
-             dob: "29/05/1987", 
-             phone: "0974860422", avatar: "https://raw.githubusercontent.com/huynqtd/index/main/tuyetnr.jpg" },
-             { name: "Đinh Phương Thắm", 
-             position: "Phó tổ trưởng", 
-             dob: "24/08/1989", 
-             phone: "0367595886", avatar: "https://raw.githubusercontent.com/huynqtd/index/main/dinhphuongtham.jpg" },
-             { name: "Nguyễn Thị Thời", 
-             position: "Công chức", 
-             dob: "16/06/1998", 
-             phone: "0374384361", avatar: "https://raw.githubusercontent.com/huynqtd/index/main/ethoi.jpg" },
-             { name: "Hoàng Thị Thủy", 
-             position: "Công chức - Văn Thư LT", 
-             dob: "29/11/1985", 
-             phone: "0979164647", avatar: "https://raw.githubusercontent.com/huynqtd/index/main/hoangthithuy.jpg" },
-             { name: "Bàn Thị Lan", 
-             position: "Công chức", 
-             dob: "03/08/1993", 
-             phone: "0962788523", avatar: "https://raw.githubusercontent.com/huynqtd/index/main/hoangthithuy.jpg" },
-             { name: "Nông Quốc Huy", 
-             position: "Công chức", 
-             dob: "08/08/1985", 
-             phone: "0338333783", avatar: "https://raw.githubusercontent.com/huynqtd/index/main/Huy.jpg" },
-             { name: "Hoàng Thị Bông", 
-             position: "Công chức", 
-             dob: "12/02/1980", 
-             phone: "0972489825", avatar: "https://raw.githubusercontent.com/huynqtd/index/main/hoangthibong.jpg" },
-             { name: "Nông Thị Linh", 
-             position: "Công chức", 
-             dob: "09/04/1996", 
-             phone: "0346143829", avatar: "https://raw.githubusercontent.com/huynqtd/index/main/nongthilinh.jpg" },
-             { name: "Lâm Thị Lan", 
-             position: "Công chức", 
-             dob: "18/05/1996", 
-             phone: "0386127398", avatar: "https://raw.githubusercontent.com/huynqtd/index/main/lamlan.jpg" }
+            {
+              name: "Nông Thị Diệu Lan",
+              position: "Tổ trưởng",
+              dob: "11/09/1989",
+              phone: "0971110989",
+              avatar: "https://raw.githubusercontent.com/huynqtd/index/main/dieulan.jpg",
+              description: "Phụ trách điều hành công việc của tổ liên quan đến nghiệp vụ thuế, dự toán và pháp chế. Đảm bảo tiến độ và chất lượng hồ sơ, tổng hợp báo cáo chuyên môn và hỗ trợ lãnh đạo đội trong các vấn đề pháp lý liên quan đến công tác thuế."
+            },
+            {
+              name: "Nguyễn Thị Tuyết",
+              position: "Phó tổ trưởng",
+              dob: "29/05/1987",
+              phone: "0974860422", avatar: "https://raw.githubusercontent.com/huynqtd/index/main/tuyetnr.jpg"
+            },
+            {
+              name: "Đinh Phương Thắm",
+              position: "Phó tổ trưởng",
+              dob: "24/08/1989",
+              phone: "0367595886", avatar: "https://raw.githubusercontent.com/huynqtd/index/main/dinhphuongtham.jpg"
+            },
+            {
+              name: "Nguyễn Thị Thời",
+              position: "Công chức",
+              dob: "16/06/1998",
+              phone: "0374384361", avatar: "https://raw.githubusercontent.com/huynqtd/index/main/ethoi.jpg"
+            },
+            {
+              name: "Hoàng Thị Thủy",
+              position: "Công chức - Văn Thư LT",
+              dob: "29/11/1985",
+              phone: "0979164647", avatar: "https://raw.githubusercontent.com/huynqtd/index/main/hoangthithuy.jpg"
+            },
+            {
+              name: "Bàn Thị Lan",
+              position: "Công chức",
+              dob: "03/08/1993",
+              phone: "0962788523", avatar: "https://raw.githubusercontent.com/huynqtd/index/main/hoangthithuy.jpg"
+            },
+            {
+              name: "Nông Quốc Huy",
+              position: "Công chức",
+              dob: "08/08/1985",
+              phone: "0338333783", avatar: "https://raw.githubusercontent.com/huynqtd/index/main/Huy.jpg"
+            },
+            {
+              name: "Hoàng Thị Bông",
+              position: "Công chức",
+              dob: "12/02/1980",
+              phone: "0972489825", avatar: "https://raw.githubusercontent.com/huynqtd/index/main/hoangthibong.jpg"
+            },
+            {
+              name: "Nông Thị Linh",
+              position: "Công chức",
+              dob: "09/04/1996",
+              phone: "0346143829", avatar: "https://raw.githubusercontent.com/huynqtd/index/main/nongthilinh.jpg"
+            },
+            {
+              name: "Lâm Thị Lan",
+              position: "Công chức",
+              dob: "18/05/1996",
+              phone: "0386127398", avatar: "https://raw.githubusercontent.com/huynqtd/index/main/lamlan.jpg"
+            }
           ]
         },
         {
@@ -309,36 +382,36 @@
       return box;
     }
     function showModal(person) {
-  const modal = document.getElementById("modal");
+      const modal = document.getElementById("modal");
 
-  // Cập nhật ảnh đại diện
-  const avatar = document.getElementById("modalAvatar");
-  avatar.src = person.avatar;
+      // Cập nhật ảnh đại diện
+      const avatar = document.getElementById("modalAvatar");
+      avatar.src = person.avatar;
 
-  // Xoá các đoạn mô tả cũ (ngoài avatar và 3 dòng đầu)
-  const extraParas = Array.from(modal.querySelectorAll("p")).slice(3);
-  extraParas.forEach(p => p.remove());
+      // Xoá các đoạn mô tả cũ (ngoài avatar và 3 dòng đầu)
+      const extraParas = Array.from(modal.querySelectorAll("p")).slice(3);
+      extraParas.forEach(p => p.remove());
 
-  // Cập nhật nội dung
-  document.getElementById("modalTitle").textContent = person.name;
-  document.getElementById("modalPosition").textContent = person.position || "";
-  document.getElementById("modalDob").textContent = "Ngày sinh: " + (person.dob || "Không rõ");
-  document.getElementById("modalPhone").innerHTML = person.phone
-    ? `SĐT: <a href="tel:${person.phone}" style="color:#007BFF;text-decoration:none;">📞 ${person.phone}</a>`
-    : "SĐT: Không rõ";
+      // Cập nhật nội dung
+      document.getElementById("modalTitle").textContent = person.name;
+      document.getElementById("modalPosition").textContent = person.position || "";
+      document.getElementById("modalDob").textContent = "Ngày sinh: " + (person.dob || "Không rõ");
+      document.getElementById("modalPhone").innerHTML = person.phone
+        ? `SĐT: <a href="tel:${person.phone}" style="color:#007BFF;text-decoration:none;">📞 ${person.phone}</a>`
+        : "SĐT: Không rõ";
 
-  if (person.description) {
-    const descPara = document.createElement("p");
-    descPara.textContent = "Mô tả: " + person.description;
-    descPara.style.marginTop = "10px";
-    descPara.style.fontSize = "14px";
-    modal.appendChild(descPara);
-  }
+      if (person.description) {
+        const descPara = document.createElement("p");
+        descPara.textContent = "Mô tả: " + person.description;
+        descPara.style.marginTop = "10px";
+        descPara.style.fontSize = "14px";
+        modal.appendChild(descPara);
+      }
 
-  // Hiển thị modal
-  modal.style.display = "block";
-  document.getElementById("overlay").style.display = "block";
-}
+      // Hiển thị modal
+      modal.style.display = "block";
+      document.getElementById("overlay").style.display = "block";
+    }
 
     function closeModal() {
       document.getElementById("modal").style.display = "none";
@@ -346,42 +419,42 @@
     }
 
     function normalizeString(str) {
-  return str.toLowerCase()
-            .normalize("NFD").replace(/\p{Diacritic}/gu, '')
-            .replace(/\s+/g, '');
-}
-function filterPersonnel() {
-  const keywordRaw = document.getElementById("searchInput").value;
-  const keyword = normalizeString(keywordRaw);
-
-  document.querySelectorAll("#leaderRow .box, #deputyRow .box").forEach(box => {
-    const nameData = normalizeString(box.dataset.name);
-    box.style.display = nameData.includes(keyword) ? "block" : "none";
-  });
-
-  document.querySelectorAll("#teamRow > .box").forEach(teamBox => {
-    const members = teamBox.querySelectorAll(".members .box");
-    let anyVisible = false;
-    members.forEach(member => {
-      const nameData = normalizeString(member.dataset.name);
-      const match = nameData.includes(keyword);
-      member.style.display = match ? "block" : "none";
-      if (match) anyVisible = true;
-    });
-
-    const memberList = teamBox.querySelector(".members");
-    const toggleIcon = teamBox.querySelector("span");
-    if (anyVisible) {
-      teamBox.style.display = "block";
-      memberList.style.display = "flex";
-      toggleIcon.textContent = "−";
-    } else {
-      teamBox.style.display = keyword ? "none" : "block";
-      memberList.style.display = "none";
-      toggleIcon.textContent = "+";
+      return str.toLowerCase()
+        .normalize("NFD").replace(/\p{Diacritic}/gu, '')
+        .replace(/\s+/g, '');
     }
-  });
-}
+    function filterPersonnel() {
+      const keywordRaw = document.getElementById("searchInput").value;
+      const keyword = normalizeString(keywordRaw);
+
+      document.querySelectorAll("#leaderRow .box, #deputyRow .box").forEach(box => {
+        const nameData = normalizeString(box.dataset.name);
+        box.style.display = nameData.includes(keyword) ? "block" : "none";
+      });
+
+      document.querySelectorAll("#teamRow > .box").forEach(teamBox => {
+        const members = teamBox.querySelectorAll(".members .box");
+        let anyVisible = false;
+        members.forEach(member => {
+          const nameData = normalizeString(member.dataset.name);
+          const match = nameData.includes(keyword);
+          member.style.display = match ? "block" : "none";
+          if (match) anyVisible = true;
+        });
+
+        const memberList = teamBox.querySelector(".members");
+        const toggleIcon = teamBox.querySelector("span");
+        if (anyVisible) {
+          teamBox.style.display = "block";
+          memberList.style.display = "flex";
+          toggleIcon.textContent = "−";
+        } else {
+          teamBox.style.display = keyword ? "none" : "block";
+          memberList.style.display = "none";
+          toggleIcon.textContent = "+";
+        }
+      });
+    }
 
 
     window.onload = function () {
@@ -439,11 +512,12 @@ function filterPersonnel() {
       });
     };
     document.addEventListener("keydown", function (e) {
-  if (e.key === "Escape") {
-    closeModal();
-  }
-});
+      if (e.key === "Escape") {
+        closeModal();
+      }
+    });
 
   </script>
 </body>
+
 </html>
