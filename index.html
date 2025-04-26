@@ -47,6 +47,18 @@
     .info {
       font-size: 14px;
     }
+    .modal-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #007BFF;
+  margin-bottom: 10px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
     .members {
       display: flex;
       flex-direction: column;
@@ -140,6 +152,7 @@
 
   <div class="overlay" id="overlay" onclick="closeModal()"></div>
   <div class="modal" id="modal">
+    <img id="modalAvatar" class="modal-avatar" src="" alt="Ảnh đại diện" />
     <h3 id="modalTitle"></h3>
     <p id="modalPosition"></p>
     <p id="modalDob"></p>
@@ -295,24 +308,25 @@
       box.dataset.name = (person.name + person.position + person.phone).toLowerCase();
       return box;
     }
-
     function showModal(person) {
   const modal = document.getElementById("modal");
 
-  // Reset các mô tả cũ nếu có
-  modal.querySelectorAll("p").forEach((p, index) => {
-    if (index > 2) p.remove(); // chỉ giữ lại 3 dòng đầu
-  });
+  // Cập nhật ảnh đại diện
+  const avatar = document.getElementById("modalAvatar");
+  avatar.src = person.avatar;
 
-  // Cập nhật nội dung chính
+  // Xoá các đoạn mô tả cũ (ngoài avatar và 3 dòng đầu)
+  const extraParas = Array.from(modal.querySelectorAll("p")).slice(3);
+  extraParas.forEach(p => p.remove());
+
+  // Cập nhật nội dung
   document.getElementById("modalTitle").textContent = person.name;
   document.getElementById("modalPosition").textContent = person.position || "";
   document.getElementById("modalDob").textContent = "Ngày sinh: " + (person.dob || "Không rõ");
   document.getElementById("modalPhone").innerHTML = person.phone
-  ? `SĐT: <a href="tel:${person.phone}" style="color:#007BFF;text-decoration:none;">📞 ${person.phone}</a>`
-  : "SĐT: Không rõ";
+    ? `SĐT: <a href="tel:${person.phone}" style="color:#007BFF;text-decoration:none;">📞 ${person.phone}</a>`
+    : "SĐT: Không rõ";
 
-  // Nếu có mô tả, hiển thị thêm
   if (person.description) {
     const descPara = document.createElement("p");
     descPara.textContent = "Mô tả: " + person.description;
@@ -325,7 +339,6 @@
   modal.style.display = "block";
   document.getElementById("overlay").style.display = "block";
 }
-
 
     function closeModal() {
       document.getElementById("modal").style.display = "none";
